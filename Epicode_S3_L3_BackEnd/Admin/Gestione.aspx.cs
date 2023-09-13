@@ -11,10 +11,25 @@ namespace Epicode_S3_L3_BackEnd
 {
     public partial class Gestione : System.Web.UI.Page
     {
+        private List<string> Carrello
+        {
+            get
+            {
+                if (Session["Carrello"] == null)
+                {
+                    Session["Carrello"] = new List<string>();
+                }
+                return (List<string>)Session["Carrello"];
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            AddIngredienti(sender, EventArgs.Empty);
-            AddPizze(sender, EventArgs.Empty);
+            if (!IsPostBack)
+            {
+                AddIngredienti(sender, EventArgs.Empty);
+                AddPizze(sender, EventArgs.Empty);
+            }
         }
 
         protected void AddPizze(object sender, EventArgs e)
@@ -25,13 +40,16 @@ namespace Epicode_S3_L3_BackEnd
                 ("Pizza Marinara", 5.00),
                 ("Pizza Diavola", 7.50),
                 ("Pizza Capricciosa", 8.00),
-                ("Pizza Nutella", 3.00),
+                ("Pizza 4 Formaggi", 7.00),
+                ("Pizza Kebab", 6.00),
+                ("Pizza Napoli", 7.50),
+                ("Pizza Mimosa", 4.00),
+                ("Pizza Nutella", 3.50),
             };
 
             if (FindControl("autoSizingSelect") is DropDownList autoSizingSelect)
             {
                 autoSizingSelect.Items.Clear();
-                autoSizingSelect.Items.Add(new ListItem("Scegli la tua pizza...", "autoSizingSelect"));
                 foreach ((string pizza, double prezzo) in pizze)
                 {
                     autoSizingSelect.Items.Add(new ListItem($"{pizza} - ${prezzo:0.00}", pizza));
@@ -63,15 +81,43 @@ namespace Epicode_S3_L3_BackEnd
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        private string GetSelectedIngredientsText()
         {
+            List<string> selectedIngredients = new List<string>();
 
+            foreach (ListItem item in CheckBoxList1.Items)
+            {
+                if (item.Selected)
+                {
+                    selectedIngredients.Add(item.Text);
+                }
+            }
+            return string.Join(", ", selectedIngredients);
         }
 
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string selectedPizza = autoSizingSelect.SelectedValue;
+            string selectedIngredientsText = GetSelectedIngredientsText();
+
+            if (!string.IsNullOrEmpty(selectedPizza) && selectedPizza != "0")
+            {
+                string pizzaWithIngredients = $"Pizza: {selectedPizza}<br />Ingredienti: {selectedIngredientsText}";
+                Carrello.Add(pizzaWithIngredients);
+
+                Label1.Text = pizzaWithIngredients;
+
+                Session["Carrello"] = Carrello;
+            }
+            else
+            {
+                errore.Visible = true;
+            }
+        }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            Label1.Text = "" + string.Join("<br />", Carrello);
         }
     }
 }

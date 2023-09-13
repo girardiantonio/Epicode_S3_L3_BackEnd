@@ -31,12 +31,18 @@
                 </div>
 
             </div>
-            <div class="container mt-5 border border-dark rounded d-flex flex-column justify-content-around align-items-center" style="width: 30em; height: 10em;">
-                <h3>Carrello</h3>
-                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+            <div class="d-flex flex-column mb-1">
+                <div class="container border border-dark rounded d-flex flex-column align-items-center mb-1" style="width: 40em; height: 15em">
+                    <div>
+                        <h3 class="mt-1 mb-1">Carrello</h3>
+                        <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h3 class="mt-1 mb-1">Totale: <span><asp:Label ID="Totale" runat="server" Text="300 Euro"></asp:Label></span></h3>
+                </div>
             </div>
-        </div>
-        <asp:Label ID="errore" Visible="false" ForeColor="Red" Font-Bold="true" runat="server" Text="Nessuna pizza selezionata"></asp:Label>
+            <asp:Label ID="errore" Visible="false" ForeColor="Red" Font-Bold="true" runat="server" Text="Nessuna pizza selezionata"></asp:Label>
     </form>
 </body>
 
