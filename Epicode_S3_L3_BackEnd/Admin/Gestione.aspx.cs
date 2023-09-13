@@ -11,57 +11,42 @@ namespace Epicode_S3_L3_BackEnd
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            AddElement(sender, EventArgs.Empty);
+        }
 
+        protected void AddElement(object sender, EventArgs e)
+        {
+            // Crea una lista di ingredienti casuali
+            List<string> ingredientiCasuali = new List<string>
+            {
+            "Funghi (+ 2,00)",
+            "Peperoni (+ 1,50)",
+            "Cipolla (+ 1,00)",
+            "Olive nere (+ 2,50)",
+            "Prosciutto Crudo (+ 3,00)",
+            "Prosciutto Cotto (+ 3,00)",
+            "Pomodori secchi (+ 2,50)",
+            "Ananas (+ 2,00)",
+            "Salsiccia (+ 2,50)",
+            "Mozzarella Buf (+ 2,00)",
+            };
+
+            // Assegna ingredienti ai CheckBox
+            for (int i = 0; i < 10 && i < ingredientiCasuali.Count; i++)
+            {
+                string ingredienteCasuale = ingredientiCasuali[i];
+
+                CheckBox checkBox = (CheckBox)FindControl("CheckBox" + (i + 1));
+                if (checkBox != null)
+                {
+                    checkBox.Text = ingredienteCasuale;
+                }
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (autoSizingSelect.SelectedValue != "Scegli la sala...")
-            {
-                string sala = autoSizingSelect.SelectedValue;
-                bool ridotto = autoSizingCheck.Checked;
-
-                // Verifica se le variabili di sessione per i contatori esistono già
-                if (Session["bigliettiVenduti" + sala] == null)
-                {
-                    Session["bigliettiVenduti" + sala] = 0;
-                }
-
-                if (Session["bigliettiRidotti" + sala] == null)
-                {
-                    Session["bigliettiRidotti" + sala] = 0;
-                }
-
-                // Aggiorna il conteggio per la sala selezionata
-                int bigliettiVenduti = (int)Session["bigliettiVenduti" + sala];
-                int bigliettiRidotti = (int)Session["bigliettiRidotti" + sala];
-
-                bigliettiVenduti++;
-                Session["bigliettiVenduti" + sala] = bigliettiVenduti;
-
-                if (ridotto)
-                {
-                    bigliettiRidotti++;
-                    Session["bigliettiRidotti" + sala] = bigliettiRidotti;
-                }
-
-                // Aggiorna il testo delle etichette con i nuovi conteggi
-                if (sala == "1")
-                {
-                    // Sala NORD
-                    Label1.Text = "Biglietti venduti SALA NORD: " + bigliettiVenduti + ", di cui ridotti: " + bigliettiRidotti;
-                }
-                else if (sala == "2")
-                {
-                    // Sala SUD
-                    Label2.Text = "Biglietti venduti SALA SUD: " + bigliettiVenduti + ", di cui ridotti: " + bigliettiRidotti;
-                }
-                else if (sala == "3")
-                {
-                    // Sala EST
-                    Label3.Text = "Biglietti venduti SALA EST: " + bigliettiVenduti + ", di cui ridotti: " + bigliettiRidotti;
-                }
-            }
+            
         }
     }
 }

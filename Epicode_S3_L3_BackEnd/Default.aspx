@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Epicode_S3_L3_BackEnd.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Epicode_S3_L3_BackEnd.Default1" %>
 
 <!DOCTYPE html>
 
@@ -12,7 +12,7 @@
 <body>
     <form id="form1" class="d-flex flex-column align-items-center" runat="server">
         <h1 class="mb-3 mt-3">Epicode Pizzeria Login</h1>
-        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/imgs/pizza.png" Width="200px" CssClass="mb-3" />
+        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/imgs/login.png" Width="200px" CssClass="mb-3" />
         <div class="w-25">
             <div class="row mb-3 d-flex justify-content-center">
                 <label for="inputUsername" class="col-sm-2 col-form-label">Email</label>

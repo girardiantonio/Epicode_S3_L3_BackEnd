@@ -11,7 +11,7 @@ namespace Epicode_S3_L3_BackEnd
 {
 
 
-    public partial class Default
+    public partial class Default1
     {
 
         /// <summary>
