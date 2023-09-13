@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,42 +13,65 @@ namespace Epicode_S3_L3_BackEnd
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            AddElement(sender, EventArgs.Empty);
+            AddIngredienti(sender, EventArgs.Empty);
+            AddPizze(sender, EventArgs.Empty);
         }
 
-        protected void AddElement(object sender, EventArgs e)
+        protected void AddPizze(object sender, EventArgs e)
         {
-            // Crea una lista di ingredienti casuali
-            List<string> ingredientiCasuali = new List<string>
+            List<(string, double)> pizze = new List<(string, double)>
             {
-            "Funghi (+ 2,00)",
-            "Peperoni (+ 1,50)",
-            "Cipolla (+ 1,00)",
-            "Olive nere (+ 2,50)",
-            "Prosciutto Crudo (+ 3,00)",
-            "Prosciutto Cotto (+ 3,00)",
-            "Pomodori secchi (+ 2,50)",
-            "Ananas (+ 2,00)",
-            "Salsiccia (+ 2,50)",
-            "Mozzarella Buf (+ 2,00)",
+                ("Pizza Margherita", 6.00),
+                ("Pizza Marinara", 5.00),
+                ("Pizza Diavola", 7.50),
+                ("Pizza Capricciosa", 8.00),
+                ("Pizza Nutella", 3.00),
             };
 
-            // Assegna ingredienti ai CheckBox
-            for (int i = 0; i < 10 && i < ingredientiCasuali.Count; i++)
+            if (FindControl("autoSizingSelect") is DropDownList autoSizingSelect)
             {
-                string ingredienteCasuale = ingredientiCasuali[i];
-
-                CheckBox checkBox = (CheckBox)FindControl("CheckBox" + (i + 1));
-                if (checkBox != null)
+                autoSizingSelect.Items.Clear();
+                autoSizingSelect.Items.Add(new ListItem("Scegli la tua pizza...", "autoSizingSelect"));
+                foreach ((string pizza, double prezzo) in pizze)
                 {
-                    checkBox.Text = ingredienteCasuale;
+                    autoSizingSelect.Items.Add(new ListItem($"{pizza} - ${prezzo:0.00}", pizza));
+                }
+            }
+        }
+
+        protected void AddIngredienti(object sender, EventArgs e)
+        {
+            List<(string, double)> ingredienti = new List<(string, double)>
+            {
+                ("Funghi", 2.00),
+                ("Peperoni", 1.50),
+                ("Cipolla", 1.00),
+                ("Olive nere", 2.50),
+                ("Prosciutto Crudo", 3.00),
+                ("Salsiccia", 2.50),
+                ("Pomodori secchi", 2.50),
+                ("Mozzarella di Bufala", 2.00),
+            };
+
+            if (FindControl("CheckBoxList1") is CheckBoxList CheckBoxList1)
+            {
+                CheckBoxList1.Items.Clear();
+                foreach ((string ingrediente, double prezzo) in ingredienti)
+                {
+                    CheckBoxList1.Items.Add(new ListItem($"{ingrediente} - ${prezzo:0.00}", ingrediente));
                 }
             }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
